@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=WallyFlow_Mindfulness
+Exec=lxterminal -e python /home/pi/hackster/final/wallyflow_mindfulness.py
+StartupNotify=true
+Terminal=true
+Hidden=false
