@@ -1,3 +1,5 @@
+#!/ust/bin/python
+
 # WallyFlow Ask-Flask App
 # Python 3.5.3
 # Raspberry Pi 3
@@ -20,6 +22,9 @@ stillTime = 0
 lastMoveTime = 0
 moveCount = 0
 
+
+#Function to read in updated variables from local text files
+#These variables are fed to Alexa when intent is activated
 def readData():
     global startTime, maxStillTime, stillTime, lastMoveTime, moveCount
 
@@ -43,30 +48,19 @@ def readData():
         stillTime = stillFile.readline()
     stillFile.close()
 
-"""   
-@app.route('/')
-def homepage():
-    return "Wally Flow: Be Mindful"    
-"""
+#This is run when the skill is invoked by Alexa
 @ask.launch
 def startSkill():
     readData()
-    mstMinutes = round(float(maxStillTime)/60,3)
-    #welcomeMsg = render_template('welcome')
-    #welcomeMsg = "Would you like to start Wally Flow?"
-    
-    welcomeMsg = "Starting Wally Flow. Maximum still time is set to {} minutes. Be Mindful!".format(mstMinutes)
-    #repromptMsg = render_template('repromptWelcome')
-    #repromptMsg = "I didn't quite get that. Would you like to start Wally Flow?"
-    #return question(welcomeMsg) \
-    #       .reprompt(repromptMsg)
+    mstMinutes = round(float(maxStillTime)/60,3)  
+    welcomeMsg = "Welcome to Wally Flow."
     return question(welcomeMsg)
 
+#The intents depend on the user's invocations
 @ask.intent("YesIntent")
 def yesIntent():
     global maxStillTime
     readData()
-    #yesMsg = render_template('yes', minutes = str(maxStillTime))
     yesMsg = "Starting Wally Flow. Maximum still time is set to {} minutes. Be Mindful!".format(maxStillTime)
     return question(yesMsg)
     
@@ -74,12 +68,10 @@ def yesIntent():
 @ask.intent("NoIntent")
 def noIntent():
     noMsg = "Stopping Wally Flow"
-    #noMsg = render_template('no')
     return statement(noMsg)
 
 @ask.intent("CancelIntent")
 def cancelIntent():
-    #cancelMsg = render_template('cancel')
     cancelMsg = "Stopping Wally Flow"
     return statement(cancelMsg)
 
@@ -87,7 +79,6 @@ def cancelIntent():
 def maxStillTimeIntent():
     global maxStillTime
     readData()
-    #maxStillTimeMsg = render_template('maxStillTime', minutes = maxStillTime)
     maxStillTimeMsg = "Your maximum still time is set to {} minutes.".format(maxStillTime)
     return question(maxStillTimeMsg)
     
@@ -95,7 +86,6 @@ def maxStillTimeIntent():
 def moveCountIntent():
     global moveCount, startTime
     readData()
-    #moveCountMsg = render_template('moveCount', mc = moveCount, st= startTime)
     moveCountMsg = "You have moved {} times since {}.".format(moveCount, startTime)
     return question(moveCountMsg)
     
@@ -104,7 +94,6 @@ def stillnesIntent():
     global stillTime
     readData()
     stMinutes = round(float(stillTime)/60,3)
-    #stillTimeMsg = render_template('stillTime', minutes = stillTime)
     stillTimeMsg = "You have been still for {} minutes".format(stMinutes)
     return question(stillTimeMsg)
 
@@ -112,7 +101,6 @@ def stillnesIntent():
 def lmtIntent():
     global lastMoveTime
     readData()
-    #lmtMsg = render_template('lastMoveTime', time = lastMoveTime)
     lmtMsg = "You last moved {}.".format(lastMoveTime)
     return question(lmtMsg)
 
@@ -120,9 +108,11 @@ def lmtIntent():
 def startTimeIntent():
     global startTime
     readData()
-    #startTimeMsg = render_template('startTime', time = startTime)
     startTimeMsg = "You started this session at {}.".format(startTime)
     return question(startTimeMsg)
 
-if __name__ == '__main__':     
+#Ask-Flask Application Runs on Local Server Port 5000
+#Don't Forget to intialize either localtunnel or ngrok
+#Otherwise, Alexa can't communicate with the app
+if __name__ == '__main__':
     app.run(debug = True)   
