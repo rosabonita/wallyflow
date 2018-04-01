@@ -1,0 +1,88 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "wally flow",
+            "intents": [
+                {
+                    "name": "YesIntent",
+                    "slots": [],
+                    "samples": [
+                        "please",
+                        "start",
+                        "yes"
+                    ]
+                },
+                {
+                    "name": "NoIntent",
+                    "slots": [],
+                    "samples": [
+                        "cancel",
+                        "stop",
+                        "no thank you",
+                        "no"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "end",
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "CancelIntent",
+                    "slots": [],
+                    "samples": [
+                        "end",
+                        "stop",
+                        "cancel"
+                    ]
+                },
+                {
+                    "name": "MaxStillTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "maximum stillness time",
+                        "max stillness time",
+                        "maximum still time",
+                        "max still time"
+                    ]
+                },
+                {
+                    "name": "MoveCountIntent",
+                    "slots": [],
+                    "samples": [
+                        "move count"
+                    ]
+                },
+                {
+                    "name": "StillTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "stillness time",
+                        "still time"
+                    ]
+                },
+                {
+                    "name": "LastMoveTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "time last moved",
+                        "last time moved",
+                        "last movement time",
+                        "last move time"
+                    ]
+                },
+                {
+                    "name": "StartTimeIntent",
+                    "slots": [],
+                    "samples": [
+                        "time started",
+                        "start time"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
