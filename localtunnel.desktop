@@ -1,0 +1,8 @@
+[Desktop Entry]
+Encoding=UTF-8
+Type=Application
+Name=Local Tunnel
+Exec=lxterminal -e lt --port 5000 --subdomain wallyflow
+StartupNotify=true
+Terminal=true
+Hidden=false
