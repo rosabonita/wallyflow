@@ -1,8 +1,0 @@
-[Desktop Entry]
-Encoding=UTF-8
-Type=Application
-Name=WallyFlow_Alexa
-Exec=lxterminal -e python /home/pi/hackster/final/wallyflow_alexa.py
-StartupNotify=true
-Terminal=true
-Hidden=false
