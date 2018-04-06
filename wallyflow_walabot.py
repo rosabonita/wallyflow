@@ -222,6 +222,7 @@ class Walabot:
                     stillTime = (time.time() - startTime)/60
                     sql = "INSERT INTO stillTable(StillTime) VALUES ('{}')".format(stillTime)
                     cursor.execute(sql)
+                    db.commit()
                 print("Moved. Delta: ", currDelta)
                 
                 return currDelta
@@ -306,5 +307,6 @@ if __name__ == '__main__':
 
         #MySQL Database Commit 
         db.commit()
+        
         #Stop and Disconnect Walabot
         wlbt.stopAndDisconnect()
