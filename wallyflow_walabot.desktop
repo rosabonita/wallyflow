@@ -1,0 +1,8 @@
+[Destop Entry]
+Encoding=UTF-8
+Type=Application
+Name=WallyFlow_Walabot
+Exec=lxterminal -e python /home/hackster/wallyflow/wallyflow_walabot.py
+StartupNotify=true
+Terminal=true
+Hidden=false
