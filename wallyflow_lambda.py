@@ -1,10 +1,10 @@
-import MySQLdb
-
 db = MySQLdb.connect(user="wallyflow",
                      passwd="wallyflow",
-                     port=3306,host="wallyflowdb.czadegulsxh8.us-east-1.rds.amazonaws.com",
-                     db="wallyflow")
+                     port=3306,
+                     host="wallyflow.czadegulsxh8.us-east-1.rds.amazonaws.com",
+                     db="wallyflowdb")
 cursor = db.cursor()
+
 
 def build_speechlet_response(title, output, reprompt_text, should_end_session):
     return {
@@ -46,6 +46,12 @@ def get_welcome_response():
     return build_response(session_attributes,
                           build_speechlet_response(card_title,speech_output,
                                                    reprompt_text,should_end_session))
+def get_mst_response():
+    session_attributes ={}
+    card_title = "Maximum Still Time"
+    sql = "SELECT MaxStillTime FROM wallyflowdb.mstTable ORDER BY initTime DESC LIMIT 1"
+    
+    
 def handle_session_end_request():
     card_title = "Session Ended"
     speech_output = "Thank you for using Wally Flow, mindfulness with Walabot and Alexa."\
@@ -54,7 +60,7 @@ def handle_session_end_request():
     return build_response({}, build_speechlet_response(
         card_title, speech_output, None, should_end_session))
 
-def create_favorite_color_attribte(favorite_color):
+def create_favorite_color_attribute(favorite_color):
     return {"favoriteColor": favorite_color}
 
 def set_color_in_session(intent, session):
@@ -119,6 +125,8 @@ def on_intent(intent_request, session):
     intent_name = intent_request['intent']['name']
 
     if intent_name == "MaxStillTimeIntent":
+        sql = "SELECT * FROM wallyflowdb.mstTable ORDER BY MaxStillTimeTS
+        
         return #MaxStillTime
     elif intent_name == "MoveCountIntent":
         return #MoveCount
