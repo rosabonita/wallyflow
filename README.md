@@ -67,33 +67,55 @@ brew install node
 ```
 brew install yarn
 ```
-``` sudo yarn.init ```
 
-```question name (wallyflow): WallyFlow ```
+``` 
+sudo yarn.init 
+```
 
-``` question version (1.0.0): ```
+```
+question name (wallyflow): WallyFlow 
+```
 
-```question description: Wally Flow, Mindfulness with Walabot and Amazon Alexa ```
+``` 
+question version (1.0.0): 
+```
 
-```question entry point (index.js): ```
+```
+question description: Wally Flow, Mindfulness with Walabot and Amazon Alexa 
+```
 
-``` question repository url: ```
+```
+question entry point (index.js):
+```
 
-``` question author: ```
+``` 
+question repository url:
+```
 
-``` question license (MIT):```
+``` 
+question author: ```
 
-``` question private: ```
+```
+question license (MIT):
+```
+
+```
+question private:
+```
 
 ### Alexa SDK
 
-```sudo yarn add alexa-sdk```
+```
+sudo yarn add alexa-sdk
+```
 
 #### Deployment Zip File
 
 *Note: If you're building your deployment package on Mac, Zip from directly from the terminal, not the context menu. Otherwise you will get an error in your file structure when you upload.*
 
-``` zip -r ../wallyflow.zip *```
+```
+zip -r ../wallyflow.zip *
+```
 
 ##### Role
 
