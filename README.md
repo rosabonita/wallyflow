@@ -17,17 +17,8 @@ QUIT;
 
 ## Desktop File
 
-## Local MySQL Database
 
-```
-sudo apt-get install mysql-server python-mysqldb
-sudo mysql
-CREATE DATABASE wallyflowdb;
-GRANT ALL PRIVILEGES ON wallyflowdb.* to 'wallflow'@'localhost' IDENTIFIED BY 'wallyflow';
-QUIT;
-```
-
-## Lambda File
+## Lambda Function
 
 ### Node JS
 
