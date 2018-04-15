@@ -49,17 +49,6 @@ Hidden=false
 ```
 
 ## Lambda Function
-``` mkdir wallyflow ```
-``` touch index.js ```
-``` sudo yarn.init ```
-```question name (wallyflow): WallyFlow ```
-``` question version (1.0.0): ```
-```question description: Wally Flow, Mindfulness with Walabot and Amazon Alexa ```
-```question entry point (index.js): ```
-``` question repository url: ```
-``` question author: ```
-``` question license (MIT):```
-``` question private: ```
 
 ### Homebrew
 These instructions are for Mac OS. It is recommended that you used Homebrew to install required packages, as it expedites the process. Instructions for installing [Homebrew](https://brew.sh/) can be found on their website.
@@ -69,11 +58,32 @@ These instructions are for Mac OS. It is recommended that you used Homebrew to i
 brew install node
 ```
 
+``` mkdir wallyflow ```
+
+``` touch index.js ```
+
 #### Yarn
 
 ```
 brew install yarn
 ```
+``` sudo yarn.init ```
+
+```question name (wallyflow): WallyFlow ```
+
+``` question version (1.0.0): ```
+
+```question description: Wally Flow, Mindfulness with Walabot and Amazon Alexa ```
+
+```question entry point (index.js): ```
+
+``` question repository url: ```
+
+``` question author: ```
+
+``` question license (MIT):```
+
+``` question private: ```
 
 ### Alexa SDK
 
