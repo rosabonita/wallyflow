@@ -67,7 +67,7 @@ with warnings.catch_warnings():
     GPIO.output(4,0)
 
 
-#Set up Connection to AWS RDS MSQ DB
+#Set up Connection to MySQLdb
 #######################################
 
 db = MySQLdb.connect(user="wallyflow",
