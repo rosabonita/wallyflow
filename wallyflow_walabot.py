@@ -1,5 +1,5 @@
 #!/ust/bin/python
-# WallyFlow Mindfullnes App
+# WallyFlow Mindfulnes App
 # Python 3.5.3
 # Raspberry Pi 3
 
