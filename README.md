@@ -69,19 +69,21 @@ These instructions are for Mac OS. It is recommended that you used Homebrew to i
 brew install node
 ```
 
-
-### Alexa SDK
-
 #### Yarn
 
 ```
 brew install yarn
 ```
 
+### Alexa SDK
+
+```sudo yarn add alexa-sdk```
 
 #### Deployment Zip File
 
 *Note: If you're building your deployment package on Mac, Zip from directly from the terminal, not the context menu. Otherwise you will get an error in your file structure when you upload.*
+
+``` zip -r ../wallyflow.zip *```
 
 ##### Role
 
