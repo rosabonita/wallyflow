@@ -58,9 +58,13 @@ These instructions are for Mac OS. It is recommended that you used Homebrew to i
 brew install node
 ```
 
-``` mkdir wallyflow ```
+``` 
+mkdir wallyflow
+```
 
-``` touch index.js ```
+``` 
+touch index.js 
+```
 
 #### Yarn
 
@@ -93,7 +97,8 @@ question repository url:
 ```
 
 ``` 
-question author: ```
+question author: 
+```
 
 ```
 question license (MIT):
