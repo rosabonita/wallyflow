@@ -72,8 +72,7 @@ with warnings.catch_warnings():
 
 db = MySQLdb.connect(user="wallyflow",
                      passwd="wallyflow",
-                     port=3306,
-                     host="wallyflow.czadegulsxh8.us-east-1.rds.amazonaws.com",
+                     host="localhost",
                      db="wallyflowdb")
 cursor = db.cursor()
 
@@ -206,24 +205,36 @@ class Walabot:
                 tEnd = lastMoveTime + maxStillTime
                 moveCount += 1
                 lastPos = currPos
+
+                #Suppress MySQL Print Statement Warnings
                 with warnings.catch_warnings():
                     warnings.simplefilter('ignore')
-                    cleanlastMoveTime =  time.strftime("%H:%M:%S",time.localtime(lastMoveTime))
-                    sql = "INSERT INTO lmtTable(LastMoveTime) VALUES ('{}')".format(cleanlastMoveTime)
-                    cursor.execute(sql)
-                    
-                    clean_tEnd = time.strftime("%H:%M:%S",time.localtime(tEnd))
-                    sql = "INSERT INTO teTable(TimeEnd) VALUES ('{}')".format(clean_tEnd)
+
+                    #Convert to Readable Time Formats
+                    currentTime = time.strftime("%D %H:%M",time.localtime(time.time()))
+                    cleanlastMoveTime =  time.strftime("%H:%M",time.localtime(time.time()))
+
+                    #Update Last Move Time
+                    sql = "INSERT INTO lmtTable(LastMoveTime, TimeStamp) VALUES ('{}', '{}')".format(cleanlastMoveTime, currentTime)
                     cursor.execute(sql)
 
-                    sql = "INSERT INTO mcTable(MoveCount) VALUES ('{}')".format(moveCount)
+                    #Update Time End
+                    clean_tEnd = time.strftime("%H:%M",time.localtime(tEnd))
+                    sql = "INSERT INTO teTable(TimeEnd, TimeStamp) VALUES ('{}', '{}')".format(clean_tEnd, currentTime)
                     cursor.execute(sql)
+
                     
-                    stillTime = (time.time() - startTime)/60
-                    sql = "INSERT INTO stillTable(StillTime) VALUES ('{}')".format(stillTime)
+                    #Update Move Count
+                    sql = "INSERT INTO mcTable(MoveCount, TimeStamp) VALUES ('{}', '{}')".format(moveCount, currentTime)
+                    cursor.execute(sql)
+
+                    #Update Still Time
+                    stillTime = round((time.time() - startTime)/60,2)
+                    sql = "INSERT INTO stillTable(StillTime, TimeStamp) VALUES ('{}', '{}')".format(stillTime, currentTime)
                     cursor.execute(sql)
                     db.commit()
-                print("Moved. Delta: ", currDelta)
+
+                print("Moved. Delta: ", round(currDelta,2))
                 
                 return currDelta
             else:
@@ -250,61 +261,79 @@ if __name__ == '__main__':
     wlbt.configure()
     wlbt.start()
 
-    print("Connecting to AWS RDS...")
+    print("Connecting to Wally Flow Database...")
+
+    #Suppress printed warnings if databases already exists
     with warnings.catch_warnings():
         warnings.simplefilter('ignore')
-        sql = "CREATE DATABASE IF NOT EXISTS wallyflow"
+
+        #Mark the time stamp, which acts as a key
+        timeStamp = time.strftime("%D %H:%M",time.localtime(time.time()))
+
+        #Initialize the Wally Flow Database
+        sql = "CREATE DATABASE IF NOT EXISTS wallyflowdb"
         cursor.execute(sql)
 
-        sql = "CREATE TABLE IF NOT EXISTS stTable(startTime TEXT )"
-        cursor.execute(sql)
-                
-        cleanstartTime = time.strftime("%H:%M:%s",time.localtime(startTime))
-        sql = "INSERT INTO stTable(startTime) VALUES ('{}')".format(cleanstartTime)
-        cursor.execute(sql)
-                
-        sql = "CREATE TABLE IF NOT EXISTS mstTable( MaxStillTime TIME )"
+        #Initialize Start Time Table
+        sql = "CREATE TABLE IF NOT EXISTS stTable(startTime TEXT, TimeStamp VARCHAR(255) )"
         cursor.execute(sql)
 
-        sql = "INSERT INTO mstTable(maxStillTime) VALUES ('{}')".format(maxStillTime)
-        cursor.execute(sql)
-                
-        sql = "CREATE TABLE IF NOT EXISTS lmtTable( LastMoveTime TIME )"
-        cursor.execute(sql)
-
-        sql = "CREATE TABLE IF NOT EXISTS teTable( TimeEnd TIME )"
+        #Clean start time and Initialize Start Time Table        
+        cleanstartTime = time.strftime("%H:%M:%S",time.localtime(startTime))
+        sql = "INSERT INTO stTable(startTime, TimeStamp) VALUES ('{0}', '{1}')".format(cleanstartTime, timeStamp)
         cursor.execute(sql)
 
-        sql = "CREATE TABLE IF NOT EXISTS mcTable( MoveCount INT )"
+        #Initialize Max Still Time Table        
+        sql = "CREATE TABLE IF NOT EXISTS mstTable( MaxStillTime TIME, TimeStamp VARCHAR(255) )"
+        cursor.execute(sql)
+        sql = "INSERT INTO mstTable(maxStillTime, TimeStamp) VALUES ('{}', '{}')".format(maxStillTime, timeStamp)
         cursor.execute(sql)
 
-        sql = "CREATE TABLE IF NOT EXISTS stillTable( StillTime INT )"
+        #Initialize Last Move Time Table      
+        sql = "CREATE TABLE IF NOT EXISTS lmtTable( LastMoveTime TIME, TimeStamp VARCHAR(255) )"
         cursor.execute(sql)
-    print("Connected to AWS RDS.")
-    
-    time.sleep(1)
-    
+
+        #Initialize Time End Table
+        sql = "CREATE TABLE IF NOT EXISTS teTable( TimeEnd TIME, TimeStamp VARCHAR(255) )"
+        cursor.execute(sql)
+
+        #Initialize Move Count Table
+        sql = "CREATE TABLE IF NOT EXISTS mcTable( MoveCount INT, TimeStamp VARCHAR(255) )"
+        cursor.execute(sql)
+
+        #Initialize Still Table
+        sql = "CREATE TABLE IF NOT EXISTS stillTable( StillTime INT, TimeStamp VARCHAR(255) )"
+        cursor.execute(sql)
+        
+    print("Connected to Wally Flow Database.")
+    time.sleep(1)  
     print("Starting WallyFlow. Be Mindful!")
     
     #UPDATE START TIME UPDATE MAX STILL TIME
     try:
+        
         #Wally Flow runs continuously until cancelled or machine shutdown
         while True:
+            
             wlbt.WallyFlow()
             if time.time() > tEnd:
+                
                 #Turn LED Strip On
                 GPIO.output(4,1)
-                #Update MC LMT TE STILL          
+                
                 #Wait 1 Second (Maximizes 'blinking light' effect)
                 time.sleep(1)
+                
                 #Turn LED Strip Off
                 GPIO.output(4,0)
-                #Exit If 
+                
                 pass
+            
     except KeyboardInterrupt:
+        
         #Turn off LEDS on WallyFlow Cancellation
         GPIO.output(4,0)
-
+        
         #MySQL Database Commit 
         db.commit()
         
