@@ -1,0 +1,54 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "wally flow",
+            "intents": [
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "end",
+                        "stop"
+                    ]
+                },
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": []
+                },
+                {
+                    "name": "AboutWalabotIntent",
+                    "slots": [],
+                    "samples": [
+                        "define walabot",
+                        "Tell me more about Walabot",
+                        "What is Walabot",
+                        "Tell me about Walabot"
+                    ]
+                },
+                {
+                    "name": "AboutWallyFlowIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me more about Wally Flow",
+                        "Tell me about Wally Flow",
+                        "What is Wally Flow"
+                    ]
+                },
+                {
+                    "name": "AboutMindfulnessIntent",
+                    "slots": [],
+                    "samples": [
+                        "Tell me more about mindfulness",
+                        "Define mindfulness",
+                        "What is Mindfulness",
+                        "Tell me about Mindfulness"
+                    ]
+                }
+            ],
+            "types": []
+        }
+    }
+}
