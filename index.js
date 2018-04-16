@@ -1,6 +1,6 @@
 const Alexa = require('alexa-sdk');
 const AWS = require('aws-sdk');
-const APP_ID = 'amzn1.ask.skill.1a61b436-2b39-448c-a2bb-1ad391fe666b';
+const APP_ID = 'ALEXA SKILL ID';
 const handlers = {
 
   "AboutMindfulnessIntent": function () {
